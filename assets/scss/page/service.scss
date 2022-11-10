@@ -154,11 +154,16 @@ section {
 
       // from through는 through까지 반복
       // from to는 to 전까지 반복
-      @for $i from 1 through 3 {
-        &:nth-child(#{$i}) {
-          background-image: url("~assets/images/content-#{$i}.png")
-        }
-      }
+      // @for $i from 1 through 3 {
+      //   &:nth-child(#{$i}) {
+      //     background-image: url("~assets/images/content-#{$i}.png")
+      //   }
+      // }
+      // @for $i from 1 to 4 {
+      //   &:nth-child(#{$i}) {
+      //     background-image: url("~assets/images/content-#{$i}.png")
+      //   }
+      // }
 
       $colors: (rgb(216, 226, 248), rgb(224, 224, 247), rgb(230, 241, 227));
       @each $color in $colors {
