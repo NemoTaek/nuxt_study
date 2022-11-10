@@ -1,9 +1,12 @@
 <template>
-  <Tutorial/>
+
 </template>
 
 <script>
 export default {
-  name: 'IndexPage'
-}
+  name: "default",
+  components: {},
+};
 </script>
+
+<style lang="scss" scoped></style>
