@@ -39,26 +39,27 @@
     -->
     <section class="user">
       <div class="inner">
-        <p class="user__name">userName :</p>
-        <p class="user__age">userAge :</p>
+        <p class="user__name">userName : {{userName}}</p>
+        <p class="user__age">userAge : {{userAge}}</p>
         <hr />
         <h4>Object</h4>
         <!-- 객체 -->
-        <p class="user__name">userName :</p>
-        <p class="user__age">userAge :</p>
+        <p class="user__name">userName : {{userInfo.name}}</p>
+        <p class="user__age">userAge : {{userInfo.age}}</p>
         <!-- array -->
         <hr />
         <h4>array</h4>
-        <p class="user__name">userName :</p>
-        <p class="user__age">userAge :</p>
+        <p class="user__name">userName : {{user[0]}}</p>
+        <p class="user__age">userAge : {{user[1]}}</p>
         <!-- class -->
         <hr />
         <h4>class</h4>
-        <p class="user__name">userName :</p>
-        <p class="user__age">userAge :</p>
+        <p class="user__name" :class="{active: userInfo.name === myUserInfo.name}">userName : {{myUserInfo.name}}</p>
+        <p class="user__age" :class="{active: userInfo.age === myUserInfo.age}">userAge : {{myUserInfo.age}}</p>
         <!-- 그 외 -->
         <hr />
         <h4>그 외</h4>
+        <a :href="naver.link" :id="naver.id">{{naver.label}}페이지로 가기</a>
       </div>
     </section>
   </main>
@@ -66,8 +67,8 @@
 
 <script>
 const myUserInfo = {
-  name: "",
-  age: null,
+  name: "Ryno",
+  age: 28,
 };
 
 export default {
@@ -75,13 +76,13 @@ export default {
   components: {},
   data() {
     return {
-      userName: "kiki",
-      userAge: null,
+      userName: "Ryno",
+      userAge: 28,
       userInfo: {
-        name: "",
-        age: null,
+        name: "Ryno",
+        age: 28,
       },
-      user: ["", null],
+      user: ["Ryno", 28],
       myUserInfo: myUserInfo,
       naver: {
         link: "https://www.naver.com",
