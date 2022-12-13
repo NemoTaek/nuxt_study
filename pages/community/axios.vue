@@ -40,19 +40,33 @@ export default {
     };
   },
   methods: {
+    // getData() {
+    //   this.$axios.$get("/todoList").then(
+    //     response => {
+    //       this.todoList = response.map(item => {
+    //         return {...item, modify: false}
+    //       })
+    //     }
+    //   );
+    // },
     getData() {
-      this.$axios.$get("/todoList").then(
-        response => {
-          this.todoList = response.map(item => {
-            return {...item, modify: false}
-          })
-        }
-      );
+      this.sendGet("/todoList", "", response => {
+        this.todoList = response.map(item => {
+          return {...item, modify: false}
+        })
+      }, error => {
+        alert(error);
+      })
     },
+    // deleteData(id) {
+    //   this.$axios.$delete(`/todoList/${id}`).then(
+    //     response => this.getData()
+    //   )
+    // },
     deleteData(id) {
-      this.$axios.$delete(`/todoList/${id}`).then(
-        response => this.getData()
-      )
+      this.sendDelete(`/todoList/${id}`, response => {
+        this.getData();
+      })
     },
     newData() {
       let data = {
