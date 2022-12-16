@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <button @click="goBack">뒤로가기</button>
     <h2>국내 야구팀</h2>
     <ul class="card">
       <li class="card__item" v-for="item in baseballTeamList" :key="item.id" @click="goDetailPage(item.id)">
@@ -80,6 +81,9 @@ export default {
     },
     showRank(rank) {
       alert(rank + "등")
+    },
+    goBack() {
+      this.$router.go(-1);
     }
   },
 };

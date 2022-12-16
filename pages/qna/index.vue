@@ -9,6 +9,10 @@
     </Parents>
     <button @click="hello">여러분 인사합시다.</button>
     <button @click="movePage">페이지 이동</button>
+
+    <ul>
+      <li v-for="(item, index) in formattedList" :key="index">{{item}}</li>
+    </ul>
   </div>
 </template>
 
@@ -19,7 +23,8 @@ export default {
   components: {Parents, Child},
   data() {
     return {
-      message: '안녕'
+      message: '안녕',
+      list: [1, 2, 3, 4, 5, 6, 7, 8, 9]
     };
   },
 
@@ -35,6 +40,12 @@ export default {
       this.$router.push("/qna/create")
     }
   },
+
+  computed: {
+    formattedList() {
+      return this.list.filter(el => el !== 6);
+    }
+  }
 }
 </script>
 

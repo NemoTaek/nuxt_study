@@ -14,6 +14,17 @@
     />
     <h2>반복문을 사용한 컴포넌트 (객체 한꺼번에 전달)</h2>
     <ClassItem v-for="item in classList" :key="item.id + 'a'" :item="item" />
+
+    <div>
+      <button @click="goPage('/product')">push 경로 이동</button>
+      <button @click="goReplacePage('/product')">replace 경로 이동</button>
+    </div>
+
+    <div>
+      <p>A VIEW {{ $store.state.count }}</p>
+      <p>B VIEW {{ storeCount }}</p>
+			<button @click="plus">+</button>
+    </div>
   </div>
 </template>
 
@@ -46,7 +57,27 @@ export default {
           message: "내용반복3",
         },
       ],
+      count: 0,
     };
+  },
+  mounted() {
+    this.$store.dispatch('getCounter');
+  },
+  methods: {
+    goPage(path) {
+      this.$router.push({path: path, query: {id: 102}})
+    },
+    goReplacePage(path) {
+      this.$router.replace({path: path, query: {id: 102}})
+    },
+    plus() {
+      this.$store.commit('addCounter', 20);
+    },
+  },
+  computed: {
+    storeCount() {
+      return this.$store.getters.getIncreaseCount;
+    },
   },
   watch: {
     inputValue(value) {
