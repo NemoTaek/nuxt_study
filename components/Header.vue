@@ -17,6 +17,9 @@
             <router-link to="./" class="header__link">홈</router-link>
           </li>
           <li class="header__gnb__item">
+            <router-link to="./todoList" class="header__link">오늘뭐하지?</router-link>
+          </li>
+          <li class="header__gnb__item">
             <router-link to="./service" class="header__link"
               >서비스</router-link
             >

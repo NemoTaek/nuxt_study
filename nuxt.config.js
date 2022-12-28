@@ -38,8 +38,14 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     "@nuxtjs/style-resources",
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    "@nuxtjs/dayjs",
   ],
+
+  dayjs: {
+    locales: ["en", "ko"],
+    defaultLocale: "ko",
+  },
 
   axios: {
     baseURL: "http://localhost:3001"
