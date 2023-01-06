@@ -7,7 +7,7 @@
     <div class="todo-list-container__main">
       <div class="todo-list-container__main__count">
         <!-- 완료 수 / 전체 개수 -->
-        {{completeItemCount}} / {{todoList.length}}
+        {{completeItemCount}} / {{storeTodoList.length}}
       </div>
       <div class="todo-list-container__main__input">
         <!-- input 박스에 작성하고 추가 버튼 누르면 추가 -->
@@ -16,20 +16,23 @@
       </div>
       <div class="todo-list-container__main__menu">
         <!-- 정렬, 전체삭제 버튼 -->
-        <select>
+        <select v-model="selectedSort" @change="sortList">
           <option value="-created_at" selected>최신순</option>
           <option value="created_at">오래된순</option>
         </select>
         <button @click="clearList">전체 삭제</button>
       </div>
       <div class="todo-list-container__main__list">
-        <div class="todo-list-container__main__list__item" v-for="(item, index) in todoList" :key="index" :class="{complete: item.complete}">
+        <div class="todo-list-container__main__list__item" v-for="(item, index) in storeTodoList" :key="index" :class="{complete: item.complete}" @click="completeItem(item)">
           <!-- 체크박스, 리스트 항목, x버튼, 생성날짜 -->
-            <div class="todo-list-container__main__list__item__text">
+            <!-- <div class="todo-list-container__main__list__item__text">
               <label :for="item.id"><input type="checkbox" :id="item.id" v-model="item.complete" :value="item.complete">{{item.title}}</label>
+            </div> -->
+            <div class="todo-list-container__main__list__item__text">
+              {{item.title}}
             </div>
             <div class="todo-list-container__main__list__item__option">
-              <button @click="deleteItem(index)">X</button>
+              <button @click="deleteItem(item)">X</button>
               <span>{{item.date}}</span>
             </div>
         </div>
@@ -51,6 +54,7 @@ export default {
       today: null,
       todoList: [],
       currentTypingTodo: null,
+      selectedSort: '-created_at',
     };
   },
 
@@ -59,28 +63,42 @@ export default {
   },
 
   methods: {
+    sortList() {
+      this.$store.commit('sortTodoListContents', this.selectedSort);
+    },
     addTodoListItem() {
       let todoItem = {};
       todoItem.id = this.idCount;
       todoItem.title = this.currentTypingTodo;
-      todoItem.date = this.$dayjs(new Date()).format('MM-DD');
+      todoItem.date = this.$dayjs(new Date()).format('M-D');
+      todoItem.realDate = new Date();
       todoItem.complete = false;
-      this.todoList.push(todoItem)
+      // this.todoList.push(todoItem)
+      this.$store.commit('addTodoListContents', todoItem);
       this.idCount++;
     },
-    deleteItem(itemIndex) {
-      this.todoList.splice(itemIndex, 1);
+    deleteItem(todoItem) {
+      // this.todoList.splice(itemIndex, 1);
+
+      this.$store.commit('deleteTodoListContents', todoItem.id);
+    },
+    completeItem(todoItem) {
+      this.$store.commit('modifyTodoListContents', todoItem);
     },
     clearList() {
-      this.todoList = [];
+      // this.todoList = [];
+      this.$store.commit('clearTodoListContents');
     }
   },
 
   computed: {
+    storeTodoList() {
+      return this.$store.getters.getTodoListContents;
+    },
     completeItemCount() {
       let count = 0;
-      for(let i in this.todoList) {
-        if(this.todoList[i].complete) count++;
+      for(let i in this.storeTodoList) {
+        if(this.storeTodoList[i].complete) count++;
       }
       return count
     }
@@ -143,11 +161,16 @@ export default {
 
         &__text {
           display: inline-block;
+          width: 90%;
         }
         &__option {
-          display: inline-block;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 10%;
           button {
-            display: block;
+            display: inline-block;
           }
         }
       }
